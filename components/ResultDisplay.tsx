@@ -14,11 +14,15 @@ const DownloadIcon = () => (
 );
 
 
-const LoadingSpinner = () => (
-    <div className="flex justify-center items-center h-full">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-amber-500"></div>
-    </div>
-);
+const LoadingSpinner = () => {
+    const { t } = useAppContext();
+    return (
+        <div role="status" className="flex flex-col items-center justify-center gap-2 h-full">
+            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-amber-500"></div>
+            <p className="text-gray-500 dark:text-gray-400">{t('buttons.generating')}</p>
+        </div>
+    );
+};
 
 const ResultDisplay: React.FC<ResultDisplayProps> = ({ imageFile, isLoading }) => {
     const { t } = useAppContext();

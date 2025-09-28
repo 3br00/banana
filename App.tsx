@@ -8,7 +8,7 @@ import Header from './components/Header';
 import { LIGHTING_STYLES, CAMERA_PERSPECTIVES } from './constants';
 import { useAppContext } from './contexts/AppContext';
 
-const SUPPORTED_IMAGE_FORMATS = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif'];
+const SUPPORTED_IMAGE_FORMATS = ['image/jpeg', 'image/png', 'image/webp'];
 
 function App() {
   const { t } = useAppContext();
@@ -140,7 +140,7 @@ Key requirements:
         <div className="lg:col-span-2">
             <ImageWorkspace 
                 productImage={productImage} 
-                onProductImageUpload={handleFileChange(setProductImage)}
+                onProductImageChange={handleFileChange(setProductImage)}
                 generatedImage={generatedImage}
                 isLoading={isLoading}
             />
@@ -151,7 +151,7 @@ Key requirements:
                 options={options}
                 setOptions={setOptions}
                 styleImage={styleImage}
-                onStyleImageUpload={handleFileChange(setStyleImage)}
+                onStyleImageChange={handleFileChange(setStyleImage)}
                 isAnalyzingStyle={isAnalyzingStyle}
             />
             <PromptEditor 

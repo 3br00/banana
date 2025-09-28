@@ -30,7 +30,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUpload, image, tit
           )}
         </div>
       </label>
-      <input id={id} type="file" className="hidden" accept="image/jpeg, image/png, image/webp, image/heic, image/heif" onChange={onImageUpload} />
+      <input id={id} type="file" className="hidden" accept="image/jpeg, image/png, image/webp" onChange={onImageUpload} />
     </div>
   );
 };

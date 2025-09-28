@@ -61,7 +61,7 @@ const CustomizationPanel: React.FC<CustomizationPanelProps> = ({ options, setOpt
                 onImageUpload={onStyleImageUpload}
             />
             {isAnalyzingStyle && (
-                <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center rounded-xl backdrop-blur-sm">
+                <div role="status" className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center rounded-xl backdrop-blur-sm">
                 <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-amber-500"></div>
                 <p className="text-sm text-white mt-2">{t('customize.analyzingStyle')}</p>
                 </div>
