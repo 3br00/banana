@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NANOBANANA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "@google/genai": "https://aistudiocdn.com/@google/genai@^1.20.0",
+          "react/": "https://aistudiocdn.com/react@^19.1.1/",
+          "react": "https://aistudiocdn.com/react@^19.1.1",
+          "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/"
+        }
+      }
+    </script>
+    <script>
+      // Set theme on initial load
+      (function() {
+        function setTheme(theme) {
+          if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        }
+        
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme) {
+          setTheme(storedTheme);
+        } else {
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          setTheme(prefersDark ? 'dark' : 'light');
+        }
+      })();
+    </script>
+    <style>
+      :root {
+        --background-color: #f9fafb;
+        --text-color: #1f2937;
+        --text-muted-color: #6b7280;
+        --card-bg: rgba(255, 255, 255, 0.6);
+        --card-border: rgba(0, 0, 0, 0.1);
+        --input-bg: rgba(255, 255, 255, 0.7);
+        --input-border: rgba(0, 0, 0, 0.1);
+        --input-focus-border: rgba(250, 204, 21, 0.8);
+        --input-focus-shadow: rgba(250, 204, 21, 0.3);
+        --select-option-bg: #e5e7eb;
+        --bg-radial-1: hsla(54, 98%, 61%, 0.1);
+        --bg-radial-2: hsla(85, 98%, 72%, 0.1);
+        --bg-radial-3: hsla(45, 98%, 61%, 0.1);
+        --bg-radial-4: hsla(56, 96%, 67%, 0.1);
+        --bg-radial-5: hsla(38, 60%, 74%, 0.1);
+        --bg-radial-6: hsla(52, 67%, 73%, 0.1);
+        --bg-radial-7: hsla(46, 98%, 62%, 0.1);
+      }
+
+      html.dark {
+        --background-color: #0c0a09;
+        --text-color: #f3f4f6;
+        --text-muted-color: #9ca3af;
+        --card-bg: rgba(255, 255, 255, 0.05);
+        --card-border: rgba(255, 255, 255, 0.1);
+        --input-bg: rgba(255, 255, 255, 0.08);
+        --input-border: rgba(255, 255, 255, 0.1);
+        --select-option-bg: #1f2937;
+      }
+
+      body {
+        background-color: var(--background-color);
+        background-image:
+          radial-gradient(at 27% 37%, var(--bg-radial-1) 0px, transparent 50%),
+          radial-gradient(at 97% 21%, var(--bg-radial-2) 0px, transparent 50%),
+          radial-gradient(at 52% 99%, var(--bg-radial-3) 0px, transparent 50%),
+          radial-gradient(at 10% 29%, var(--bg-radial-4) 0px, transparent 50%),
+          radial-gradient(at 97% 96%, var(--bg-radial-5) 0px, transparent 50%),
+          radial-gradient(at 44% 47%, var(--bg-radial-6) 0px, transparent 50%),
+          radial-gradient(at 18% 99%, var(--bg-radial-7) 0px, transparent 50%);
+        color: var(--text-color);
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .glass-card {
+        background: var(--card-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--card-border);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        transition: background-color 0.3s, border-color 0.3s;
+      }
+      .glass-input {
+         background: var(--input-bg);
+         border: 1px solid var(--input-border);
+         color: var(--text-color);
+         transition: background-color 0.3s, border-color 0.3s;
+      }
+       .glass-input:focus {
+          outline: none;
+          border-color: var(--input-focus-border);
+          box-shadow: 0 0 0 2px var(--input-focus-shadow);
+       }
+       .glass-input option {
+        background-color: var(--select-option-bg);
+       }
+       #root {
+         position: relative;
+         z-index: 1;
+       }
+       /* --- Banana Animation --- */
+      .bananas-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      .banana {
+        position: absolute;
+        bottom: -150px;
+        animation-name: floatUp;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+        opacity: 0;
+        text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      }
+
+      @keyframes floatUp {
+        0% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 0;
+        }
+        10%, 90% {
+          opacity: 0.8;
+        }
+        100% {
+          transform: translateY(-120vh) rotate(720deg);
+          opacity: 0;
+        }
+      }
+
+      .banana:nth-child(1) { left: 10%; font-size: 2.5rem; animation-duration: 18s; animation-delay: 0s; }
+      .banana:nth-child(2) { left: 20%; font-size: 1.5rem; animation-duration: 14s; animation-delay: 2s; }
+      .banana:nth-child(3) { left: 25%; font-size: 3rem; animation-duration: 22s; animation-delay: 5s; }
+      .banana:nth-child(4) { left: 40%; font-size: 1.8rem; animation-duration: 25s; animation-delay: 1s; }
+      .banana:nth-child(5) { left: 55%; font-size: 2.2rem; animation-duration: 16s; animation-delay: 7s; }
+      .banana:nth-child(6) { left: 65%; font-size: 3.5rem; animation-duration: 19s; animation-delay: 3s; }
+      .banana:nth-child(7) { left: 75%; font-size: 1.7rem; animation-duration: 13s; animation-delay: 9s; }
+      .banana:nth-child(8) { left: 85%; font-size: 2.8rem; animation-duration: 21s; animation-delay: 4s; }
+      .banana:nth-child(9) { left: 90%; font-size: 2rem; animation-duration: 17s; animation-delay: 6s; }
+      .banana:nth-child(10) { left: 5%; font-size: 2.4rem; animation-duration: 24s; animation-delay: 11s; }
+      .banana:nth-child(11) { left: 50%; font-size: 1.9rem; animation-duration: 15s; animation-delay: 13s; }
+      .banana:nth-child(12) { left: 80%; font-size: 2.6rem; animation-duration: 20s; animation-delay: 8s; }
+    </style>
+  </head>
+  <body>
+    <div class="bananas-bg">
+        <div class="banana">🍌</div>
+        <div class="banana">🍌</div>
+        <div class="banana">🍌</div>
+        <div class="banana">🍌</div>
+        <div class="banana">🍌</div>
+        <div class="banana">🍌</div>
+        <div class="banana">🍌</div>
+        <div class="banana">🍌</div>
+        <div class="banana">🍌</div>
+        <div class="banana">🍌</div>
+        <div class="banana">🍌</div>
+        <div class="banana">🍌</div>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
