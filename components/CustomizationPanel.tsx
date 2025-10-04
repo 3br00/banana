@@ -9,6 +9,7 @@ interface CustomizationPanelProps {
   setOptions: React.Dispatch<React.SetStateAction<CustomizationOptions>>;
   styleImage: ImageFile | null;
   onStyleImageUpload: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onRemoveStyleImage: () => void;
   isAnalyzingStyle: boolean;
 }
 
@@ -22,7 +23,7 @@ const CustomSelect: React.FC<{ label: string; value: string; onChange: (e: React
 );
 
 
-const CustomizationPanel: React.FC<CustomizationPanelProps> = ({ options, setOptions, styleImage, onStyleImageUpload, isAnalyzingStyle }) => {
+const CustomizationPanel: React.FC<CustomizationPanelProps> = ({ options, setOptions, styleImage, onStyleImageUpload, onRemoveStyleImage, isAnalyzingStyle }) => {
   const { t } = useAppContext();
   
   const handleChange = <K extends keyof CustomizationOptions,>(key: K, value: CustomizationOptions[K]) => {
@@ -59,6 +60,7 @@ const CustomizationPanel: React.FC<CustomizationPanelProps> = ({ options, setOpt
                 title={t('customize.uploadStyleImage')}
                 image={styleImage}
                 onImageUpload={onStyleImageUpload}
+                onRemove={onRemoveStyleImage}
             />
             {isAnalyzingStyle && (
                 <div role="status" className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center rounded-xl backdrop-blur-sm">

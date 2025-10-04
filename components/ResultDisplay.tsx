@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ImageFile } from '../types';
 import { useAppContext } from '../contexts/AppContext';
 
@@ -16,10 +16,25 @@ const DownloadIcon = () => (
 
 const LoadingSpinner = () => {
     const { t } = useAppContext();
+    const loadingMessages = t('loadingMessages').split('|');
+    const [message, setMessage] = useState(loadingMessages[0]);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setMessage(prev => {
+                const currentIndex = loadingMessages.indexOf(prev);
+                const nextIndex = (currentIndex + 1) % loadingMessages.length;
+                return loadingMessages[nextIndex];
+            });
+        }, 2500);
+        return () => clearInterval(interval);
+    }, [loadingMessages]);
+
+
     return (
-        <div role="status" className="flex flex-col items-center justify-center gap-2 h-full">
+        <div role="status" className="flex flex-col items-center justify-center gap-4 h-full text-center px-4">
             <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-amber-500"></div>
-            <p className="text-gray-500 dark:text-gray-400">{t('buttons.generating')}</p>
+            <p className="text-gray-500 dark:text-gray-400 transition-opacity duration-500">{message}</p>
         </div>
     );
 };

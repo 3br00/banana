@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { ImageFile } from '../types';
 import ImageUploader from './ImageUploader';
@@ -9,11 +7,12 @@ import { useAppContext } from '../contexts/AppContext';
 interface ImageWorkspaceProps {
   productImage: ImageFile | null;
   onProductImageUpload: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onRemoveProductImage: () => void;
   generatedImage: ImageFile | null;
   isLoading: boolean;
 }
 
-const ImageWorkspace: React.FC<ImageWorkspaceProps> = ({ productImage, onProductImageUpload, generatedImage, isLoading }) => {
+const ImageWorkspace: React.FC<ImageWorkspaceProps> = ({ productImage, onProductImageUpload, onRemoveProductImage, generatedImage, isLoading }) => {
   const { t } = useAppContext();
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
@@ -24,6 +23,7 @@ const ImageWorkspace: React.FC<ImageWorkspaceProps> = ({ productImage, onProduct
             title={t('uploader.product')}
             image={productImage}
             onImageUpload={onProductImageUpload}
+            onRemove={onRemoveProductImage}
         />
       </div>
       <div className="flex flex-col items-center gap-4">

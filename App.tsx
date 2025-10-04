@@ -53,7 +53,10 @@ function App() {
 
   useEffect(() => {
     const generateNewPrompt = () => {
-      if (!productImage) return '';
+      if (!productImage) {
+        setPrompt('');
+        return;
+      }
       let newPrompt = `Generate a high-resolution, professional product photograph of the subject in the provided image.
 
 Key requirements:
@@ -120,6 +123,21 @@ Key requirements:
       reader.readAsDataURL(file);
     }
   };
+  
+  const handleReset = useCallback(() => {
+    setProductImage(null);
+    setStyleImage(null);
+    setGeneratedImage(null);
+    setError(null);
+    setOptions({
+        lightingStyle: LIGHTING_STYLES[0].value,
+        cameraPerspective: CAMERA_PERSPECTIVES[0].value,
+    });
+  }, []);
+
+  const handleRemoveProductImage = useCallback(() => setProductImage(null), []);
+  const handleRemoveStyleImage = useCallback(() => setStyleImage(null), []);
+
 
   const GenerateButton = ({ className = '' }: { className?: string }) => (
     <button 
@@ -134,13 +152,14 @@ Key requirements:
 
   return (
     <div className="min-h-screen w-full flex flex-col items-center p-4">
-      <Header />
+      <Header onReset={handleReset} />
       
       <main className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8 pb-28 lg:pb-0">
         <div className="lg:col-span-2">
             <ImageWorkspace 
                 productImage={productImage} 
                 onProductImageUpload={handleFileChange(setProductImage)}
+                onRemoveProductImage={handleRemoveProductImage}
                 generatedImage={generatedImage}
                 isLoading={isLoading}
             />
@@ -152,6 +171,7 @@ Key requirements:
                 setOptions={setOptions}
                 styleImage={styleImage}
                 onStyleImageUpload={handleFileChange(setStyleImage)}
+                onRemoveStyleImage={handleRemoveStyleImage}
                 isAnalyzingStyle={isAnalyzingStyle}
             />
             <PromptEditor 

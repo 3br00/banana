@@ -20,6 +20,13 @@ const LanguageIcon = () => (
     </svg>
 );
 
+const ResetIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h5M20 20v-5h-5M4 4l1.5 1.5A9 9 0 0112 5v0a9 9 0 019 9h-2a7 7 0 00-7-7v0a7 7 0 00-5.6 2.4L4 4zM20 20l-1.5-1.5A9 9 0 0112 19v0a9 9 0 01-9-9h2a7 7 0 007 7v0a7 7 0 005.6-2.4L20 20z" />
+    </svg>
+);
+
+
 const YouTubeIcon = () => (
     <a href="https://www.youtube.com/@3brrhman" target="_blank" rel="noopener noreferrer" aria-label="Visit YouTube Channel">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" className="h-10 w-10 sm:h-12 sm:w-12 text-red-600 hover:text-red-700 transition-colors" fill="currentColor">
@@ -29,7 +36,7 @@ const YouTubeIcon = () => (
 );
 
 
-const Header = () => {
+const Header = ({ onReset }: { onReset: () => void }) => {
   const { theme, setTheme, language, setLanguage, t } = useAppContext();
 
   const Controls = () => (
@@ -54,6 +61,14 @@ const Header = () => {
         aria-label="Toggle theme"
       >
         {theme === 'light' ? <MoonIcon /> : <SunIcon />}
+      </button>
+      <button
+        onClick={onReset}
+        className="glass-input p-2 rounded-md hover:bg-gray-500/10 dark:hover:bg-white/10 transition-colors"
+        aria-label={t('header.startOver')}
+        title={t('header.startOver')}
+      >
+        <ResetIcon />
       </button>
     </div>
   );

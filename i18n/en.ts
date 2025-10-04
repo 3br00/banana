@@ -2,6 +2,7 @@ export const en = {
   header: {
     title: "NANOBANANA 🍌",
     subtitle: "Peel away the ordinary. Create stunning product shots.",
+    startOver: "Start Over",
   },
   customize: {
     title: "Customize Your Image",
@@ -17,6 +18,7 @@ export const en = {
   },
   uploader: {
     product: "Upload Product Image",
+    remove: "Remove image",
   },
   result: {
     placeholder: "Your result will appear here",
@@ -26,6 +28,8 @@ export const en = {
   prompt: {
     title: "Edit Your Prompt",
     placeholder: "Your generated prompt will appear here...",
+    copy: "Copy",
+    copied: "Copied!",
   },
   buttons: {
     generate: "Generate Image",
@@ -39,6 +43,7 @@ export const en = {
     generation: "An unknown error occurred during image generation.",
     unsupportedFileType: "Unsupported file type. Please upload a JPEG, PNG, or WebP image.",
   },
+  loadingMessages: "Peeling the pixels...|Polishing the product...|Adjusting the lighting...|Focusing the lens...|Rendering the details...",
   lightingOptions: {
     natural: 'Natural Light',
     studio: 'Studio Light',
