@@ -140,7 +140,7 @@ Key requirements:
         <div className="lg:col-span-2">
             <ImageWorkspace 
                 productImage={productImage} 
-                onProductImageChange={handleFileChange(setProductImage)}
+                onProductImageUpload={handleFileChange(setProductImage)}
                 generatedImage={generatedImage}
                 isLoading={isLoading}
             />
@@ -151,7 +151,7 @@ Key requirements:
                 options={options}
                 setOptions={setOptions}
                 styleImage={styleImage}
-                onStyleImageChange={handleFileChange(setStyleImage)}
+                onStyleImageUpload={handleFileChange(setStyleImage)}
                 isAnalyzingStyle={isAnalyzingStyle}
             />
             <PromptEditor 
